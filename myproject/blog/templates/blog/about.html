@@ -1,0 +1,93 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}"> <!-- hedha el css main eli hatineh f blog eli hiya subdirectory f static el  directory fel blog  -->
+
+    {% if title %}
+        <title>Projet- {{ title }}</title>
+    {% else %}
+        <title>Projet</title>
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'blog/about.css' %}">
+    <title>About-us</title>
+    
+   
+</head>
+<body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="{% url 'chat' %}"></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="{% url 'chat' %}">Chat</a>
+              <a class="nav-item nav-link" href="{% url 'blogabout' %}">About</a>
+              <a class="nav-item nav-link" href="{% url 'contactus' %}">Contact Us</a>
+            </div>
+            <!-- Navbar Right Side -->
+            <div class="navbar-nav">
+              {% if user.is_authenticated %} 
+              <a class="nav-item nav-link" href="{% url 'send_message' %}">Send Message</a>
+              <a class="nav-item nav-link" href="{% url 'inbox' %}">Inbox</a>
+              <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+              <a class="nav-item nav-link" href="{% url 'profile' %}">profile</a>
+              {% else %}
+                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="about-us">
+        <h1>Welcome to Safe Speak</h1>
+        <p>
+            At Safe Speak , we are dedicated to providing a secure and encrypted platform for your communication needs. Our mission is to offer a seamless and reliable chatting experience while prioritizing your privacy and security.
+        </p>
+        
+        <h2>Our Vision</h2>
+        <p>
+            We envision a world where individuals can connect and communicate freely without compromising their privacy. Through cutting-edge encryption technologies and user-centric design, we strive to empower our users to exchange ideas, collaborate, and build meaningful connections in a safe and secure environment.
+        </p>
+        
+        <h2>Our Commitment</h2>
+        <ul>
+            <li><strong>Security First:</strong> We employ robust encryption protocols to safeguard your messages and data from unauthorized access.</li>
+            <li><strong>User Privacy:</strong> Your privacy is our top priority. We do not collect unnecessary personal information and adhere to strict privacy policies.</li>
+            <li><strong>Reliability:</strong> We aim to provide a seamless chatting experience with minimal downtime and disruptions.</li>
+            <li><strong>Innovation:</strong> We continuously explore and implement innovative solutions to enhance the security and functionality of our platform.</li>
+        </ul>
+        
+        <div>
+            <h2>Get in Touch</h2>
+            <p>
+                Have questions or feedback? We'd love to hear from you! Feel free to reach out to our team at <a href="{% url 'contactus' %}">Contact Us</a> for any inquiries or support.
+            </p>
+        </div>
+        
+        <p>
+            Thank you for choosing Safe Speak for your communication needs. Together, let's chat securely and freely.
+        </p>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

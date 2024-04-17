@@ -1,0 +1,7 @@
+{% for message in conversation %}
+    <div class="message">
+        <span class="sender">{{ message.sender }}</span>
+        <span class="time">{{ message.timestamp }}</span><br>
+        {{ message.content }}
+    </div>
+{% endfor %}

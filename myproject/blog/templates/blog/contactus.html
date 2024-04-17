@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A contact page for our site">
+    <meta name="author" content="Chat with us">
+
+    <link href="https://fonts.googleapis.com/css2?family=Overpass+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'blog/basecontact.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/maincontact.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/footercontact.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/navbarcontact.css' %}">
+    <link rel="shortcut icon" href="{% static 'blog/codecell_logo.svg' %}" type="image/x-icon" sizes="any"> <!--replace our logo-->
+
+    <script defer src="{% static 'blog/account_dropdown.js' %}"></script>
+    <script defer src="{% static 'blog/burger_menu_dropdown.js' %}"></script>
+    
+    <title>CONTACT US</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="left-side">
+            <div class="burger-menu">
+                <div class="line-1"></div>
+                <div class="line-2"></div>
+                <div class="line-3"></div>
+            </div>
+
+            <div class="logo">
+                <a href="#"><img src="" ></a>
+            </div>
+
+            <ul class="navbar-main-ul hide-burger-menu burger-menu-dropdown">
+                <a href="#"><li></li></a>
+                <a href="#"><li></li></a>
+                <a href="#"><li></li></a>
+                <a href="#"><li></li></a>
+                <a href="#"><li></li></a>
+                <a href="#"><li></li></a>
+            </ul>
+        </div>
+        <div class="right-side">
+            {% if  user.is_authenticated %}
+            <div class="account">
+                <div class="user-name">{{ user.username }}</div>
+                <div class="dropdown-caret"></div>
+            </div>
+            
+            <div class="dropdown hide">
+                <ul>
+                    <a  href="{% url 'profile' %}"><li>Your profile</li></a>
+                    <a  href="{% url 'chat' %}"><li>Chat</li></a>
+                    <a  href="{% url 'blogabout' %}"><li>About Us</li></a>
+                    <a  href="{% url 'logout' %}"><li>Log Out</li></a>
+                </ul>
+            </div>
+            {% else %}
+            <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <main>
+        <div class="title">Contact us</div>
+        <div class="title-info">We'll get back to you soon!</div>
+
+        <form method="post" class="form">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" name="name" id="first-name" placeholder="First name">
+                <label for="first-name">First name</label>
+            </div>
+        
+            <div class="input-group">
+                <input type="text" name="last_name" id="last-name" placeholder="Last Name">
+                <label for="last-name">Last name</label>
+            </div>
+        
+            <div class="input-group">
+                <input type="email" name="email" id="e-mail" placeholder="e-mail">
+                <label for="e-mail">e-mail</label>
+            </div>
+        
+            <div class="textarea-group">
+                <textarea name="message" id="message" rows="5" placeholder="Message"></textarea>
+                <label for="message">Message</label>
+            </div>
+        
+            <div class="button-div">
+                <button type="submit">Send</button>
+            </div>
+        </form>
+        
+    </main>
+
+    <footer>
+        <a href="https://www.facebook.com/profile.php?id=61558117004385" target="_blank"><img class="social-media-img" src="{% static 'blog/facebook.svg' %}" alt="Facebook"></a>
+        <a href="https://github.com/" target="_blank"><img class="social-media-img" src="{% static 'blog/github.svg' %}" alt="GitHub"></a>
+        <a href="https://www.instagram.com/" target="_blank"><img class="social-media-img" src="{% static 'blog/instagram.svg' %}"  alt="Instagram"></a>
+
+        <a href="https://twitter.com/" target="_blank"><img class="social-media-img" src="{% static 'blog/twitter.svg' %}" alt="Twitter"></a>
+    </footer>
+</body>
+</html>
+
+
+
+
+

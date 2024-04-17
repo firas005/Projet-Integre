@@ -1,0 +1,15 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+    <h1>Blocked Users</h1>
+    <ul>
+        {% for user in blocked_users %}
+            <li>{{ user.username }}</li>
+            <form method="post" action="{% url 'unblock_user' %}">
+                {% csrf_token %}
+                <input type="hidden" name="user_to_unblock" value="{{ user.username }}">
+                <button type="submit">Unblock</button>
+            </form>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <h1>Send a Message</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        <label for="id_recipient">Recipient Username:</label>
+        <input type="text" id="id_recipient" name="recipient_username">
+        <br>
+        <label for="id_content">Message:</label>
+        <textarea id="id_content" name="content"></textarea>
+        <br>
+        <button type="submit">Send</button>
+    </form>
+    <br>
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% endif %}
+
+    <!-- Add this block to display error if recipient doesn't exist -->
+    {% if form.errors.recipient_username %}
+        <p class="error-message">{{ form.errors.recipient_username }}</p>
+    {% endif %}
+{% endblock %}
