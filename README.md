@@ -25,7 +25,7 @@ SafeChat is an encrypted peer-to-peer messaging application with group chat feat
 - **ASGI Server**: Daphne
 - **Containerization**: Docker
 
-  ## Directory Structure
+## Directory Structure
 
 myproject/
 ├── Projet-Integre/
