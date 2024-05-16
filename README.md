@@ -15,6 +15,49 @@ SafeChat is an encrypted peer-to-peer messaging application with group chat feat
 - **Backend**: Python (Django framework)
 - **Database**: [Database name]
 - **Encryption**: [Encryption algorithm used]
+## Technologies Used
+- **Frontend**: HTML, CSS, JavaScript, Ajax
+- **Backend**: Python (Django framework)
+- **Django Modules**: Django Channels, Websockets, Django REST framework
+- **Database**: MySQL
+- **SMTP**: Simple Mail Transfer Protocol
+- **Encryption**: Cryptography Python module, Fernet
+- **ASGI Server**: Daphne
+- **Containerization**: Docker
+
+  ## Directory Structure
+
+myproject/
+├── Projet-Integre/
+└── README.md
+
+./myproject/
+├── blog/
+│ ├── init.py
+│ ├── admin.py
+│ ├── apps.py
+│ ├── consumers.py
+│ ├── forms.py
+│ ├── migrations/
+│ ├── models.py
+│ ├── routing.py
+│ ├── static/
+│ ├── templatetags/
+│ ├── tests.py
+│ ├── urls.py
+│ └── views.py
+└── users/
+├── init.py
+├── admin.py
+├── apps.py
+├── forms.py
+├── migrations/
+├── models.py
+├── static/
+├── templates/
+├── tests.py
+├── urls.py
+└── views.py
 
 ## Getting Started
 1. Clone the repository:
