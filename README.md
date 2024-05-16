@@ -84,7 +84,7 @@ myproject/
 
 └── views.py
 
-![Alt text](https://github.com/firas005/Projet-Integre/blob/7b22fae30fd610689151f665210f7fa46383dc6f/contactus.png) "Contact Us"
+
 
 ![Alt text](https://github.com/firas005/Projet-Integre/blob/79a49dd7af340ce0abcec264ae5c218bcac135cc/signup.png)"Register Page"
 
