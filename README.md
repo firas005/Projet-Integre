@@ -85,7 +85,8 @@ myproject/
 └── views.py
 
 
-![Alt text]([url_of_your_photo ](https://github.com/firas005/Projet-Integre/blob/6ee5087594125343622510372be172bb684d7190/Login.png)"Login page")
+![Alt text](https://github.com/firas005/Projet-Integre/blob/6ee5087594125343622510372be172bb684d7190/Login.png "Login Page")
+
 
 
 ## Getting Started
