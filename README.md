@@ -84,7 +84,15 @@ myproject/
 
 └── views.py
 
+
+![Alt text]([url_of_your_photo ](https://github.com/firas005/Projet-Integre/blob/6ee5087594125343622510372be172bb684d7190/Login.png)"Login page")
+
+
 ## Getting Started
 1. Clone the repository:
    ```bash
    git clone https://github.com/firas005/Projet-Integre.git
+
+
+
+   
