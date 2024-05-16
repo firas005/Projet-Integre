@@ -28,35 +28,60 @@ SafeChat is an encrypted peer-to-peer messaging application with group chat feat
 ## Directory Structure
 
 myproject/
+myproject/
 ├── Projet-Integre/
 └── README.md
 
 ./myproject/
+
 ├── blog/
+
 │ ├── init.py
+
 │ ├── admin.py
+
 │ ├── apps.py
 │ ├── consumers.py
+
 │ ├── forms.py
+
 │ ├── migrations/
+
 │ ├── models.py
+
 │ ├── routing.py
+
 │ ├── static/
+
 │ ├── templatetags/
+
 │ ├── tests.py
+
 │ ├── urls.py
+
 │ └── views.py
+
 └── users/
 ├── init.py
+
 ├── admin.py
+
 ├── apps.py
+
 ├── forms.py
+
 ├── migrations/
+
 ├── models.py
+
 ├── static/
+
 ├── templates/
+
 ├── tests.py
+
 ├── urls.py
+
 └── views.py
 
 ## Getting Started
