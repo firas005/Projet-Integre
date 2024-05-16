@@ -1,0 +1,40 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="content-section">
+                    <h3>Contacts</h3>
+                    <ul class="list-group">
+                        {% for contact in contacts %}
+                            <li class="list-group-item"><a href="/inbox/?contact={{ contact.username }}">{{ contact.username }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="chat-container">
+                    {% if selected_contact %}
+                        <div class="messages">
+                            {% for message in selected_conversation %}
+                                <div class="message">
+                                    <span class="sender">{{ message.sender }}</span>
+                                    <span class="time">{{ message.timestamp }}</span><br>
+                                    {{ message.content }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <form method="post" action="{% url 'post_message' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="recipient" value="{{ selected_contact.username }}">
+                            <input type="text" name="message" class="message-input" placeholder="Type your message here">
+                            <button type="submit" class="submit-button">Send</button>
+                        </form>
+                    {% else %}
+                        <h3>Select a contact to start a conversation</h3>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

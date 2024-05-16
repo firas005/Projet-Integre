@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <title>Login </title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'blog/w3.css' %}">
+  <link rel="stylesheet" href="{% static 'blog/style.css' %}">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="icon" type="image/png" href="/static/assets/img/favicon/S.jpg">
+
+</head>
+<body>
+    <div class="w3-sidebar w3-bar-block w3-border-right" style="display:none" id="mySidebar">
+        <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
+        <a href="{% url 'blogabout' %}" class="w3-bar-item w3-button">About Us</a>
+        <a href="{% url 'contactus' %}" class="w3-bar-item w3-button">Contact Us</a>
+        <a href="{% url 'register' %}" class="w3-bar-item w3-button">Register</a>
+
+      </div>    
+      <!-- Page Content -->
+    <div class="w3-teal">
+        <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
+        <div class="w3-container">
+
+    </div>
+
+  </div>
+  <br>
+    <div class="box-form">
+	    <div class="left">
+		    <div class="overlay">
+
+          <h1 style="font-size: 94px !important;">Welcome To <br> Safe Speak</h1>
+            
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <p class="hidden-content">Lorem ipsum dolor sitgferrgrergegrergegrereg amet, consectetur adipiscing elit. Curabitur et est sed felis aliquet sollicitudin</p>
+                <span>
+                  <p>Join us On Social Media</p>
+                  <a href="https://www.facebook.com/profile.php?id=61558431933821"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                  <a href="https://twitter.com/?logout=1715550511348"><i class="fab fa-x" aria-hidden="true"></i> X(twitter)</a>
+                </span>
+                
+		    </div>
+
+
+	    </div>
+        
+	    <div class="right">
+		    
+		    <p style="position:absolute;top: 430px; left:1130px;">Don't have an account Yet? <br> <a href="{% url 'register' %}">Create Your Account</a></p>
+		    <div class="inputs">
+			    <form method="post">
+                    {% csrf_token %}
+                    <input type="text" name="username" placeholder="user name">
+                    <br>
+                    <input type="password" name="password" placeholder="password">
+            </div>
+            <br><br>
+           
+            <button type="submit">Login</button>
+            <br>
+            <br>
+            <br>
+            <div class="remember-me--forget-password">
+              <!-- Angular -->
+<label id="remember-me-label" style="display: none;">
+  <span class="text-checkbox">Remember me</span>
+  <input type="checkbox" id="remember-me-checkbox" name="remember_me">
+</label>
+
+              <a href="{% url 'password_reset' %}" style="margin-left: 40px;">Forgot your password?</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    function w3_open() {
+      document.getElementById("mySidebar").style.display = "block";
+    }
+    
+    function w3_close() {
+      document.getElementById("mySidebar").style.display = "none";
+    }
+</script>
+
+</body>
+</html>

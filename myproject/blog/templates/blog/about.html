@@ -1,0 +1,51 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Profile {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <main class="content">
+    <div class="about-us">
+      <br>
+      <br>
+      <br>
+        <h1>Welcome to Safe Speak</h1>
+        <p>
+            At Safe Speak , we are dedicated to providing a secure and encrypted platform for your communication needs. Our mission is to offer a seamless and reliable chatting experience while prioritizing your privacy and security.
+        </p>
+        
+        <h2>Our Vision</h2>
+        <p>
+            We envision a world where individuals can connect and communicate freely without compromising their privacy. Through cutting-edge encryption technologies and user-centric design, we strive to empower our users to exchange ideas, collaborate, and build meaningful connections in a safe and secure environment.
+        </p>
+        
+        <h2>Our Commitment</h2>
+        <ul>
+            <li><strong>Security First:</strong> We employ robust encryption protocols to safeguard your messages and data from unauthorized access.</li>
+            <li><strong>User Privacy:</strong> Your privacy is our top priority. We do not collect unnecessary personal information and adhere to strict privacy policies.</li>
+            <li><strong>Reliability:</strong> We aim to provide a seamless chatting experience with minimal downtime and disruptions.</li>
+            <li><strong>Innovation:</strong> We continuously explore and implement innovative solutions to enhance the security and functionality of our platform.</li>
+        </ul>
+        
+        <div>
+            <h2>Get in Touch</h2>
+            <p>
+                Have questions or feedback? We'd love to hear from you! Feel free to reach out to our team at <a href="{% url 'contactus' %}">Contact Us</a> for any inquiries or support.
+            </p>
+        </div>
+        
+        <p>
+            Thank you for choosing Safe Speak for your communication needs. Together, let's chat securely and freely.
+        </p>
+    </div>
+
+  </main>
+
+{% endblock content %}
+  
+  <!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ selected_group_chat.group_name }}</title>
+</head>
+<body>
+    <h1>{{ selected_group_chat.group_name }}</h1>
+    
+    <!-- Display group chat messages -->
+    <ul>
+        {% for message in group_messages %}
+            <li>{{ message.sender }}: {{ message.content }}</li>
+        {% endfor %}
+    </ul>
+    
+    <!-- Form to send messages -->
+    <form method="post" action="{% url 'post_group_message' group_chat_id=selected_group_chat.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- Add the recipient_username field if needed -->
+        <!-- <div>
+            <label for="id_recipient_username">Recipient Username:</label>
+            <input type="text" name="recipient_username" required>
+        </div> -->
+        
+        <div>
+            <label for="id_content">Message:</label>
+            <textarea name="content" cols="40" rows="5" required placeholder="Enter Your Message..."></textarea>
+        </div>
+        
+        <input type="submit" value="Send">
+    </form>
+</body>
+</html>

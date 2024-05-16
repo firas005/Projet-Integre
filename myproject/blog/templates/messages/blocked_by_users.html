@@ -1,0 +1,9 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <h1>Users Who Blocked You</h1>
+    <ul>
+        {% for profile in blocked_by_users %}
+            <li>{{ profile.user.username }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

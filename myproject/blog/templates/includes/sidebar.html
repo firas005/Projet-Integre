@@ -1,0 +1,62 @@
+
+    <nav id="sidebarMenu" class="sidebar d-md-block bg-primary text-white collapse px-4">
+        <div class="sidebar-sticky pt-3 mx-auto">
+            <div class="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
+            <div class="d-flex align-items-center">
+                <div class="user-avatar lg-avatar mr-4">
+                <img src="{{ request.user.profile.get_avatar }}" class="card-img-top rounded-circle border-white" alt="Bonnie Green">
+                </div>
+                <div class="d-block">
+                <h2 class="h6">
+                    {{ request.user.username }}
+                </h2>
+                <a href="{% url 'logout' %}" class="btn btn-secondary text-dark btn-xs">
+                    <span class="mr-2"><span class="fas fa-sign-out-alt"></span></span>Sign Out</a>
+                </div>
+            </div>
+            <div class="collapse-close d-md-none">
+                <a href="#sidebarMenu" class="fas fa-times" data-toggle="collapse"
+                    data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="true"
+                    aria-label="Toggle navigation"></a>
+            </div>
+            </div>
+            <ul class="nav flex-column">
+                {% if user.is_authenticated %}
+                    <li class="nav-item {% if 'profile' in segment %} active {% endif %}">
+                        <a href="{% url 'profile' %}" class="nav-link">
+                            <span class="sidebar-icon"><span class="fas fa-user"></span></span>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'chat' %}" class="nav-link">
+                            <span class="sidebar-icon"><span class="fas fa-home"></span></span>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'logout' %}" class="nav-link">
+                            <span class="sidebar-icon"><span class="fas fa-sign-out-alt text-danger"></span></span>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a href="{% url 'chat' %}" class="nav-link">
+                            <span class="sidebar-icon"><span class="fas fa-home"></span></span>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'contactus' %}" class="nav-link">
+                            <span class="sidebar-icon"><span class="fas fa-envelope"></span></span>
+                            <span>Contact Us</span>
+                        </a>
+                    </li>
+                {% endif %}
+                <li role="separator" class="dropdown-divider mt-4 mb-3 border-black"></li>
+            </ul>
+            
+        </div>
+    </nav>
+

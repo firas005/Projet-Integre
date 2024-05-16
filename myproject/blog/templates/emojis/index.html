@@ -1,0 +1,113 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="FlImUzKfM9FIzyoiutsHJe08pP08nko9rkesYHEB09U" />
+    <meta name="robots" content="all" />
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/css/uikit.min.css" />
+
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit-icons.min.js"></script>
+
+
+    <title>Emoji JS</title>
+</head>
+<body >
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+
+
+        <div>
+            <textarea name="" class="txt1 uk-textarea uk-margin" style="background-color: #1a2028;color: #fff;"></textarea>
+            <button id="btn2">😊</button>
+            
+        </div>
+        
+    </div>
+    
+
+
+    <script src="{% static 'emojis/Emoji.js' %}"></script>
+    <script>
+        // Function to initialize the EmojiPicker
+        function initializeEmojiPicker() {
+            new EmojiPicker({
+                trigger: [
+                    {
+                        selector: '#btn2', // Use the correct selector for your button
+                        insertInto: '.chat-input textarea' // Specify the correct selector for the message textarea
+                    }
+                ],
+                closeButton: true,
+                dragButton: true,
+                width: 350,
+                height: 370,
+                addPosX: -130,
+                addPosY: -380,
+                tabbed: false,
+                navPos: "bottom",
+                navButtonReversed: false,
+                disableSearch: false,
+                hiddenScrollBar: true, // Not for Firefox
+                animation: "slideDown",
+                animationDuration: "1s",
+                disableNav: false,
+                emojiDim: {
+                    emojiPerRow: 5,
+                    emojiSize: 30,
+                    emojiButtonHeight: 80,
+                    hideCategory: true
+                }
+            });
+        }
+    
+        // Call the function to initialize the EmojiPicker when the document is fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEmojiPicker();
+    
+            // Prevent default form submission when the emojis button is clicked
+            document.getElementById('btn2').addEventListener('click', function(event) {
+                event.preventDefault();
+            });
+    
+            // Handle message sending asynchronously
+            document.querySelector('.footer-chat-right .drop-btn .btn').addEventListener('click', async function(event) {
+                event.preventDefault();
+    
+                // Get the message content
+                var messageContent = document.querySelector('.chat-input textarea').value;
+    
+                // Send the message asynchronously (Replace this with your actual message sending logic)
+                try {
+                    // Send the message using AJAX or fetch
+                    // For example:
+                    // const response = await fetch('/send-message', {
+                    //     method: 'POST',
+                    //     body: JSON.stringify({ message: messageContent }),
+                    //     headers: {
+                    //         'Content-Type': 'application/json'
+                    //     }
+                    // });
+                    
+                    // Clear the message input after sending
+                    document.querySelector('.chat-input textarea').value = '';
+                } catch (error) {
+                    console.error('Error sending message:', error);
+                }
+            });
+        });
+    </script>
+    
+</body>
+</html>

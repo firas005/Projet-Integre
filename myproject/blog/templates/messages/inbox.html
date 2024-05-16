@@ -1,0 +1,141 @@
+    {% extends "blog/base.html" %}
+    {% load static %}
+    {% block content %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="content-section">
+                        <h3>Contacts</h3>
+                        <ul class="list-group">
+                            {% for contact in contacts %}
+                                <li class="list-group-item">
+                                    <a href="{% url 'inbox_with_contact' contact.username %}">
+                                        {% if contact.profile.image %}
+                                            <img src="{{ contact.profile.image.url }}" class="rounded-circle" alt="{{ contact.username }}" style="width: 32px; height: 32px; margin-right: 10px;">
+                                        {% else %}
+                                            <img src="{% static 'path/to/default/profile_picture.jpg' %}" class="rounded-circle" alt="Default Profile Picture" style="width: 32px; height: 32px; margin-right: 10px;">
+                                        {% endif %}
+                                        {{ contact.username }}
+                                    </a>
+                                    {% if not contact in request.user.profile.blocked_users.all %}
+                                        <form method="post" action="{% url 'block_user' %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="user_to_block" value="{{ contact.username }}">
+                                            <button type="submit" class="btn btn-sm btn-danger">Block</button>
+                                        </form>
+                                    {% else %}
+                                        <form method="post" action="{% url 'unblock_user' %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="user_to_unblock" value="{{ contact.username }}">
+                                            <button type="submit" class="btn btn-sm btn-primary">Unblock</button>
+                                        </form>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="chat-container">
+                        {% if selected_conversation %}
+                            {% if request.user in selected_contact.profile.blocked_users.all %}
+                                <div class="alert alert-warning" role="alert">
+                                    This user has blocked you. You cannot send or receive messages to/from this user.
+                                </div>
+                            {% else %}
+                                <div class="messages">
+                                    {% for message in selected_conversation %}
+                                        <div class="message">
+                                            <span class="sender">{{ message.sender }}</span>
+                                            <span class="time">{{ message.timestamp }}</span><br>
+                                            {{ message.content }}
+                                            {% if message.sender == request.user %}
+                                                <form method="post" action="{% url 'delete_message' message.id %}">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-sm btn-danger delete-button">Delete</button>
+                                                </form>
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                {% if selected_contact not in request.user.profile.blocked_users.all %}
+                                    <form method="post" action="{% url 'post_message' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="recipient" value="{{ selected_contact.username }}">
+                                        <input type="text" name="message" class="form-control message-input" placeholder="Type your message here">
+                                        <button type="submit" class="btn btn-sm btn-primary submit-button">Send</button>
+                                    </form>
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            <h3>Select a contact to start a conversation</h3>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            /* Add your CSS styles for the discussion here */
+            .chat-container {
+                max-width: 400px;
+                margin: 20px auto;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                overflow: hidden;
+            }
+            .messages {
+                padding: 10px;
+                margin: 10px;
+                max-height: 300px; /* Adjust the maximum height as needed */
+                overflow-y: auto; /* Add scrollbars when content exceeds the height */
+            }
+            .message {
+                background-color: #DCF8C6;
+                padding: 10px;
+                margin-bottom: 10px;
+                border-radius: 10px;
+                word-wrap: break-word;
+            }
+            .message .sender {
+                font-weight: bold;
+                color: #075e54;
+            }
+            .message .time {
+                font-size: 0.8em;
+                color: #777;
+                margin-left: 5px;
+            }
+            .message-input {
+                margin: 10px;
+                padding: 5px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                width: calc(100% - 100px);
+            }
+            .submit-button {
+                margin: 10px;
+                padding: 8px 15px;
+                background-color: #075e54;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            .delete-button {
+                margin: 10px;
+                padding: 8px 15px;
+                background-color: #dc3545;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            .btn-primary, .btn-danger {
+                margin-top: 10px;
+            }
+            .alert {
+                margin-top: 10px;
+            }
+        </style>
+    {% endblock %}

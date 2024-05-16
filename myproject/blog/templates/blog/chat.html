@@ -1,0 +1,144 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .message {
+            font-size: 24px;
+            color: red;
+            text-align: center;
+            margin-top: 50vh;
+            transform: translateY(-50%);
+        }
+    </style>
+    </head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}"> <!-- hedha el css main eli hatineh f blog eli hiya subdirectory f static el  directory fel blog  -->
+
+
+   
+</head>
+<body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="{% url 'chat' %}"></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="{% url 'chat' %}">Chat</a>
+              <a class="nav-item nav-link" href="{% url 'blogabout' %}">About</a>
+              <a class="nav-item nav-link" href="{% url 'contactus' %}">Contact Us</a>
+            </div>
+            <!-- Navbar Right Side -->
+            <div class="navbar-nav">
+              {% if user.is_authenticated %} 
+              <a class="nav-item nav-link" href="{% url 'send_message' %}">Send Message</a>
+              <a class="nav-item nav-link" href="{% url 'inbox' %}">Inbox</a>
+              <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+              <a class="nav-item nav-link" href="{% url 'profile' %}">profile</a>
+              {% else %}
+                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="message">CHAT GROUPS (WORK IN PROGRESS)</div>
+       
+    </body>
+
+
+
+
+<!--
+    <div class="chat-container">
+        <div class="messages">
+            {% for post in posts %}
+                <div class="message">
+                    <span class="sender">{{ post.author }}</span>
+                    <span class="time">{{ post.date_posted }}</span><br>
+                    {{ post.content }}
+                    {% if user.is_authenticated and post.author == user %}
+                        <form method="post" action="{% url 'delete_post' post.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        <form method="post" action="{% url 'post_message' %}">
+            {% csrf_token %}
+            <input type="text" name="message" class="message-input" placeholder="Type your message here">
+            <button type="submit" class="submit-button">Send</button>
+        </form>
+    </div>
+    <style>
+        .chat-container {
+            max-width: 400px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .message {
+            background-color: #DCF8C6;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 10px;
+            word-wrap: break-word;
+            position: relative;
+        }
+        .message .sender {
+            font-weight: bold;
+            color: #075e54;
+        }
+        .message .time {
+            font-size: 0.8em;
+            color: #777;
+            margin-left: 5px;
+        }
+        .message-input {
+            margin: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: calc(100% - 20px);
+        }
+        .submit-button {
+            margin: 10px;
+            padding: 8px 15px;
+            background-color: #075e54;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .delete-btn {
+            margin-left: 10px;
+            padding: 5px 10px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+ -->
+
+
+
+

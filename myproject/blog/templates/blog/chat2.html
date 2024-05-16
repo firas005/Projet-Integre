@@ -1,0 +1,1290 @@
+{% load static %}
+{% load custom_filters %}
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'chat/main.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="icon" type="image/png" href="/static/assets/img/favicon/S.jpg">
+
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/css/uikit.min.css" />
+
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit-icons.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'assets/vendor/notyf/notyf.min.js' %}"></script>
+<script type="application/javascript" src="{% static 'assets/js/notify.js' %}"></script>
+<script src="{% static 'assets/vendor/notyf/notyf.min.js' %}"></script>
+
+
+
+</head>
+
+<body>
+    
+    <div class="app-container">
+       
+        
+        <div class="app-left-medium">
+            <div class="header-icon">
+                <div class="menu-top">
+                    <div class="menu-text">
+                        <h6>Welcome To Safe Speak</h6>
+                    </div>
+
+                    
+                </div>
+            </div>
+            
+            <div class="side-menu">
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="" class="sidebar-link is-active">
+                            <div class="menu-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-message-circle">
+                                    <path
+                                        d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="menu-link">
+                                <span>
+                                    Messages
+                                </span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-link" onclick="toggleSendMessage()">
+                            <div class="menu-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-file-text">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    <polyline points="10 9 9 9 8 9"></polyline>
+                                </svg>
+                            </div>
+                            <div class="menu-link">
+                                <span style="size: 10;">
+                                    Send messages
+                                </span>
+                            </div>
+                        </a>
+                        
+                        
+                    </li>
+                    <div id="sendMessageForm" style="display: none; padding: 20px; background-color: #f0f0f0; border-radius: 10px; margin-top: 20px;">
+                        <form method="post" action="{% url 'send_message' %}">
+                            {% csrf_token %}
+                            <label for="recipient_username" style="font-weight: bold; margin-bottom: 5px;">Recipient Username:</label>
+                            <input type="text" id="recipient_username" name="recipient_username" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+                            <br>
+                            <label for="content" style="font-weight: bold; margin-bottom: 5px;">Message:</label>
+                            <textarea id="content" name="content" style="width: 100%; height: 100px; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;"></textarea>
+                            <br>
+                            <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Send</button>
+                            {% if error_message %}
+                                <p>{{ error_message }}</p>
+                            {% endif %}
+                        </form>
+                    </div>
+                    
+                    <script>
+                        function toggleSendMessage() {
+                            var form = document.getElementById("sendMessageForm");
+                            if (form.style.display === "none") {
+                                form.style.display = "block";
+                            } else {
+                                form.style.display = "none";
+                            }
+                        }
+                    </script>
+                    
+                    <li>
+                        <a href="#" class="sidebar-link is-active" onclick="toggleCreateGroupChat()">
+                            <div class="menu-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle">
+                                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="menu-link">
+                                <span>Create group chat</span>
+                            </div>
+                        </a>
+                    </li>
+                    
+                    <div id="createGroupChatForm" style="display: none; padding: 20px; background-color: #f0f0f0; border-radius: 10px; margin-top: 20px;">
+                        <form method="post" action="{% url 'create_group_chat' %}" style="margin: 0;">
+                            {% csrf_token %}
+                            <!-- Add input fields for group chat details -->
+                            <label for="group_name" style="font-weight: bold; margin-bottom: 5px;">Group Name:</label>
+                            <input type="text" id="group_name" name="group_name" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+                            
+                            <!-- Add input fields for selecting members -->
+                            <label for="members" style="font-weight: bold; margin-bottom: 5px;">Members:</label>
+                            <select name="members" id="members" multiple style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+                                {% for contact in contacts %}
+                                    <option value="{{ contact.id }}">{{ contact.username }}</option>
+                                {% endfor %}
+                            </select>
+                            
+                            <!-- Add other input fields as needed -->
+                            <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Create</button>
+                        </form>
+                    </div>
+                    
+                    <script>
+                        function toggleCreateGroupChat() {
+                            var form = document.getElementById("createGroupChatForm");
+                            if (form.style.display === "none") {
+                                form.style.display = "block";
+                            } else {
+                                form.style.display = "none";
+                            }
+                        }
+                    </script>
+                    <li>
+                        <a href="{% url 'profile' %}" class="sidebar-link">
+                            <div class="menu-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="menu-link">
+                                <span>Profile</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'blogabout' %}" class="sidebar-link">
+                            <div class="menu-icon">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                            <div class="menu-link">
+                                <span>About Us</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'contactus' %}" class="sidebar-link">
+                            <div class="menu-icon">
+                                <i class="fas fa-envelope"></i> <!-- Changed from "fas fa-info-circle" to "fas fa-envelope" -->
+                            </div>
+                            <div class="menu-link">
+                                <span>Contact Us</span> <!-- Updated text to "Contact Us" -->
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'logout' %}" class="sidebar-link">
+                            <div class="menu-icon">
+                                <span class="fas fa-sign-out-alt text-danger"></span>
+                            </div>
+                            <div class="menu-link">
+                                <span>Logout</span>
+                            </div>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        
+
+
+
+
+        <style>
+            .message-menu {
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        border-radius: 4px;
+        padding: 8px;
+        z-index: 1;
+        top: -10px;
+    }
+
+    .message-menu img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-bottom: 8px;
+    }
+
+    .message-menu span {
+        font-weight: bold;
+        color: #333;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .message-menu form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .message-menu input[type="text"] {
+        padding: 8px;
+        margin-bottom: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .message-menu button[type="submit"] {
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+            .hidden {
+                display: none;
+            }
+        </style>
+        <div class="app-right-big">
+            <div class="app-header-main" >
+                <div class="left-header-title"> 
+                    {% if message_type == 'contact' %}
+                    <h6 style="font-size: 30px;">{{ selected_contact_username }}</h6>
+  {% elif message_type == 'group' %}
+  <h6 style="font-size: 30px;">{{ selected_group_chat.group_name }}</h6>
+{% endif %}
+                    
+                    
+                </div>
+                
+                <div class="mid-header-select">
+                    <div class="header-select-box">
+                        
+                    </div>
+                    
+                </div>
+                <style>
+                    .dropdown-menu {
+                        max-height: 200px;
+                        overflow-y: auto;
+                        padding: 10px;
+                        border-radius: 8px;
+                        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+                        background-color: #f9f9f9;
+                    }
+                
+                    .form-group {
+                        margin-bottom: 20px;
+                    }
+                
+                    .form-label {
+                        display: block;
+                        font-weight: bold;
+                        margin-bottom: 10px;
+                        color: #555;
+                    }
+                
+                    .form-control {
+                        width: calc(100% - 20px);
+                        padding: 10px;
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                        transition: border-color 0.3s ease;
+                    }
+                
+                    .form-control:focus {
+                        outline: none;
+                        border-color: #6c63ff;
+                    }
+                
+                    .btn {
+                        padding: 10px 20px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                        cursor: pointer;
+                    }
+                
+                    .btn-primary {
+                        background-color: #6c63ff;
+                        color: #fff;
+                        border: none;
+                    }
+                
+                    .btn-primary:hover {
+                        background-color: #544bd2;
+                    }
+                
+                    .btn-danger {
+                        background-color: #ff4d4f;
+                        color: #fff;
+                        border: none;
+                    }
+                
+                    .btn-danger:hover {
+                        background-color: #d94848;
+                    }
+                </style>
+                <style>
+                    .dropdown-menu {
+                        max-height: 200px;
+                        overflow-y: auto;
+                        padding: 15px;
+                        border-radius: 8px;
+                        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+                        background-color: #fff;
+                        border: 1px solid #ccc;
+                        width: 250px; /* Adjust the width as needed */
+                    }
+                
+                    .dropdown-menu form {
+                        margin-bottom: 15px;
+                    }
+                
+                    .dropdown-menu label {
+                        font-weight: bold;
+                        color: #333;
+                        margin-bottom: 5px;
+                        display: block;
+                    }
+                
+                    .dropdown-menu input[type="text"],
+                    .dropdown-menu input[type="file"] {
+                        width: calc(100% - 20px);
+                        padding: 10px;
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                        transition: border-color 0.3s ease;
+                        box-sizing: border-box;
+                        margin-bottom: 10px;
+                    }
+                
+                    .dropdown-menu input[type="text"]:focus,
+                    .dropdown-menu input[type="file"]:focus {
+                        outline: none;
+                        border-color: #6c63ff;
+                    }
+                
+                    .dropdown-menu button {
+                        padding: 10px 20px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                        cursor: pointer;
+                        background-color: #6c63ff;
+                        color: #fff;
+                        border: none;
+                        width: 100%;
+                    }
+                
+                    .dropdown-menu button:hover {
+                        background-color: #544bd2;
+                    }
+                </style>
+                
+                {% if admin %}
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="adminMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Admin Menu
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="adminMenuButton">
+                        <!-- Add user to group chat -->
+                        <form method="post" action="{% url 'add_user_to_group_chat' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="group_chat_id" value="{{ selected_group_chat.id }}">
+                            <label for="username">Add User:</label>
+                            <input type="text" id="username" name="username" placeholder="Username">
+                            <button class="dropdown-item" type="submit">Add User</button>
+                        </form>
+                        <!-- Remove user from group chat -->
+                        <form method="post" action="{% url 'remove_user_from_group_chat' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="group_chat_id" value="{{ selected_group_chat.id }}">
+                            <label for="username">Kick User:</label>
+                            <input type="text" id="username" name="username" placeholder="Username">
+                            <button class="dropdown-item" type="submit">Kick User</button>
+                        </form>
+                        <!-- Set group chat picture -->
+                        {% if owner %}
+                        <form method="post" action="{% url 'set_group_chat_picture' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="group_chat_id" value="{{ selected_group_chat.id }}">
+                            <label for="picture">Set Group Picture:</label>
+                            <input type="file" id="picture" name="picture">
+                            <button class="dropdown-item" type="submit">Set Picture</button>
+                        </form>
+                        <!-- Add administrator to group chat -->
+                        <form method="post" action="{% url 'add_administrator_to_group_chat' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="group_chat_id" value="{{ selected_group_chat.id }}">
+                            <label for="admin_username">Add Administrator:</label>
+                            <input type="text" id="admin_username" name="admin_username" placeholder="Admin Username">
+                            <button class="dropdown-item" type="submit">Add Administrator</button>
+                        </form>
+                        <!-- Change group chat name -->
+                        <form method="post" action="{% url 'change_group_name' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="group_chat_id" value="{{ selected_group_chat.id }}">
+                            <label for="new_group_name">Change Group Name:</label>
+                            <input type="text" id="new_group_name" name="new_group_name" placeholder="New Group Name">
+                            <button class="dropdown-item" type="submit">Change Name</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+{% endif %}
+            
+<script>
+    $(document).ready(function() {
+        // Toggle message menu when clicking on sender name
+        $(".sender-name").click(function() {
+            $(this).siblings('.message-menu').toggle();
+            return false; // Prevent default action of anchor tag
+        });
+    });
+</script>
+                <div class="header-user-profile">
+                    <div class="pro-pic" style="margin-left: 150px;">
+                        <a href="{% url 'profile' %}">
+                            <img src="{{ request.user.profile.get_avatar }}" alt="" class="img-fluid" style="object-fit: cover; width: 100%; height: 100%;">
+                        </a>
+                    </div>
+                    
+                    
+                    
+                </div>
+                
+            </div>
+            
+            <div class="app-container-inside">
+                <div class="app-inside-left">
+                    <div class="chat-area">
+                       
+                        
+                        
+                        <div class="chat-area" id="conversation-area" style="padding-bottom: 80px;">
+                            {% if is_blocked %} 
+                           <h3>The user blocked you</h3>
+                           {% else %}
+                           
+                            {% if selected_conversation %}
+                            {% for message in selected_conversation %}
+                                <div class="chat-msg">
+                                    <div class="chat-smg-img">
+                                        <div class="pro-pic" style="width: 50px; height: 50px; overflow: hidden; border-radius: 50%;">
+                                            <img src="{{ message.message.sender.profile.get_avatar }}" alt="" class="img-fluid" style="object-fit: cover; width: 100%; height: 100%;">
+                                        </div>
+                                    </div>
+                                    <div class="chat-msg-content">
+                                        <div class="chat-msg-name">
+                                            <div class="msg-name">
+                                                <h6>{{ message.message.sender.username }}</h6>
+                                            </div>
+                                            <div class="msg-time" style="margin-bottom: 21px;">
+                                                <span>{{ message.message.timestamp }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="chat-msg-text">
+                                            <p style="max-width: 70ch; overflow-wrap: break-word;">{{ message.message.content }}</p>
+                                            <!-- Add any additional message content here -->
+                                            
+                                            <!-- Check if there are any file attachments -->
+                                            {% if message.message.attachments.all %}
+                                                
+                                                   
+                                                        {% for attachment in message.message.attachments.all %}
+                                                        <div class="chat-file-box">
+                                                        <div class="files-container" style="display: flex; flex-direction: column;">
+                                                            <div class="box-file" style="width: 500px;">
+                                                                <a href="{{ attachment.file.url }}" download>
+                                                                    {% if attachment.file.name %}
+                                                                        {% with extension=attachment.file.name|slice:"-4:" %}
+                                                                            {% if attachment.file.name|is_image %}
+                                                                                <img src="{{ attachment.file.url }}" alt="{{ attachment.file.name }}">
+                                                                            {% else %}
+                                                                                {% if attachment.file.name %}
+                                                                                    <img src="{{ attachment.file.name|file_icon }}" alt="File Icon">
+                                                                                {% endif %}
+                                                                            {% endif %}
+                                                                        {% endwith %}   
+                                                                    {% endif %}
+                                                                </a>
+                                                                <p>{{ attachment.file.name|slice:"12:" }} </p>
+                                                                <div class="file-size">
+                                                                    <span>{{ attachment.file.size }}</span>
+                                                                </div>
+                                                                <!-- Add icons or links for file actions -->
+                                                            </div> 
+                                                        </div>         
+                                                    </div> 
+                                                        {% endfor %}
+                                                    
+                                                    
+                                                    
+                                                
+                                            {% endif %}
+                                            
+                                            <!-- Add delete button -->
+                                            {% if message.message.sender == request.user %}
+                                            <form method="post" action="{% url 'delete_message' message.message.id %}">
+                                                {% csrf_token %}
+                                                <button type="submit" style="background-color: #ff4d4d; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Delete</button>
+                                            </form>
+                                        {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            
+                        {% else %}
+                            <div class="chat-area" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+                                <div style="text-align: center;">
+                                    {% if message_type != "group" %}
+                                    <p style="font-size: 24px; color: #333; font-weight: bold;">Choose a contact to chat with</p>
+                                    {% endif %}
+                                    <!-- Add any additional styling here -->
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% endif %}
+                        
+    
+    <!-- Display group chat messages -->
+                        <ul>
+                            {% for message in group_messages %}
+<div class="chat-msg" data-message-id="{{ message.id }}">
+    <div class="chat-smg-img">
+        <div class="pro-pic" style="width: 50px; height: 50px; overflow: hidden; border-radius: 50%;">
+            <img src="{{ message.sender.profile.get_avatar }}" alt="" class="img-fluid" style="object-fit: cover; width: 100%; height: 100%;">
+        </div>
+    </div>
+    <div class="chat-msg-content">
+        
+        <div class="chat-msg-name">
+            <div class="msg-name">
+                <h6 class="sender-name toggle-menu" data-message-id="{{ message.id }}">{{ message.sender }}</h6>
+                <div class="message-menu hidden" id="message-menu-{{ message.id }}">
+                    <img src="{{ message.sender.profile.get_avatar }}" alt="{{ message.sender.username }}'s Photo">
+                    <span>{{ message.sender }}</span>
+                    {% if message.sender.username != profile.user.username %}
+                    <form id="message-form" action="{% url 'send_message' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="recipient_username" value="{{ message.sender.username }}">
+                        <input type="text" name="content" placeholder="Type your message here">
+                        <button type="submit">Send</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="msg-time" style="margin-bottom: 21px;">
+                <span>{{ message.timestamp }}</span>
+            </div>
+        </div>
+        <div class="chat-msg-text" >
+            <p style="max-width: 70ch; overflow-wrap: break-word;">{{ message.content }}</p>
+            <!-- Add any additional message content here -->
+
+            <!-- Check if there are any file attachments -->
+            {% if message.attachments.all %}
+            <div class="chat-file-box">
+                {% for attachment in message.attachments.all %}
+                <div class="box-file" style="width: 400px;">
+                    <a href="{{ attachment.file.url }}" download>
+                        {% if attachment.file.name %}
+                        {% with extension=attachment.file.name|slice:"-4:" %}
+                        {% if attachment.file.name|is_image %}
+                        <img src="{{ attachment.file.url }}" alt="{{ attachment.file.name }}">
+                        {% else %}
+                        {% if attachment.file.name %}
+                        <img src="{{ attachment.file.name|file_icon }}" alt="File Icon">
+                        {% endif %}
+                        {% endif %}
+                        {% endwith %}
+                        {% endif %}
+                    </a>
+                    <p>{{ attachment.file.name|slice:"12:" }} </p>
+                </div>
+                <div class="box-file-name">
+                    <div class="file-size">
+                        <span>{{ attachment.file.size }}</span>
+                    </div>
+                </div>
+                <div class="box-file-icon">
+                    <!-- Add icons or links for file actions -->
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+
+
+            <!-- Add delete button -->
+            {% if message.sender == request.user %}
+            <form method="post" action="{% url 'delete_messageG' message.id %}">
+                {% csrf_token %}
+                <button type="submit" style="background-color: #ff4d4d; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Delete</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<script>
+    $(document).ready(function() {
+        // Click event handler for sender name
+        $(".sender-name").click(function(e) {
+            e.stopPropagation(); // Prevent the click event from bubbling up
+
+            // Hide all message menus
+            $(".message-menu").hide();
+
+            // Get the ID of the clicked sender's message
+            var messageId = $(this).data('message-id');
+
+            // Get the position of the sender name
+            var senderNamePosition = $(this).offset();
+
+            // Get the height of the sender name
+            var senderNameHeight = $(this).outerHeight();
+
+            // Get the height of the message menu
+            var menuHeight = $("#message-menu-" + messageId).outerHeight();
+
+            // Calculate the top position for the message menu
+            var topPosition = senderNamePosition.top + senderNameHeight;
+
+            // Adjust the top position to ensure the menu is fully visible
+            if ((topPosition + menuHeight) > $(window).height()) {
+                topPosition = $(window).height() - menuHeight;
+            }
+
+            // Set the position of the message menu
+            $("#message-menu-" + messageId).css({
+                top: topPosition + "px",
+                left: senderNamePosition.left + "px",
+                display: "block"
+            });
+
+            return false; // Prevent default action of anchor tag
+        });
+
+        // Click event handler for document body
+        $(document).on("click", function() {
+            // Hide all message menus
+            $(".message-menu").hide();
+        });
+
+        // Click event handler for message menu to prevent hiding when clicked
+        $(".message-menu").click(function(e) {
+            e.stopPropagation(); // Prevent the click event from bubbling up
+        });
+    });
+</script>
+
+
+
+                            
+                     </ul>
+
+                        </div>
+                        
+                        <form id="chatForm" method="post" action="{% url 'handle_message' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="message_types" value="{{ message_type }}">
+                            <div class="chat-area-footer" style="position: fixed; bottom: 0; left:300px;padding: 10px;z-index: 1;">
+                        
+                                <div class="footer-chat-left">
+                                    <!-- Button to trigger file input -->
+                                    <button type="button" class="add" style="margin-top: 11px; margin-right: 10px;"></button>
+                                    <!-- Hidden file input -->
+                                    <input type="file" name="attachment" id="attachmentInput" hidden multiple>
+                                    <div class="chat-input" style="width:600px;" >
+                                        {% if message_type == 'contact' %}
+                                        <textarea id="messageTextArea" name="message" placeholder="Enter Your Message..."></textarea>
+                                        <!-- Fields for direct messages -->
+                                        <input type="hidden" name="recipient" value="{{ selected_contact_username }}">
+                                        {% elif message_type == 'group' %}
+                                        <!-- Fields for group messages -->
+                                        <textarea id="contentTextArea" name="content" placeholder="Enter Your Message..."></textarea>
+                                        <input type="hidden" name="group_chat_id" value="{{ selected_group_chat.id }}">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="footer-chat-right"> 
+                                    <div class="tag-emoji" style="margin-left: 150px !important;">
+                                        <button id="btn2" style="background: none; border: none; padding: 0; cursor: pointer; font-size: 24px;">😊</button>
+                                    </div>
+                                    <div class="drop-btn">
+                                        <button id= "sendButton" type="submit" class="btn btn-drap">Send</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+
+
+                             
+                        <script>
+                            $(document).ready(function() {
+                                $('#chatForm').submit(function(event) {
+                                    // Prevent the default form submission behavior
+                                    event.preventDefault();
+                                    
+                                    // Serialize the form data
+                                    var formData = new FormData($(this)[0]);
+                                   
+                                    // Send the form data via AJAX
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: $(this).attr('action'),
+                                        data: formData,
+                                        processData: false,
+                                        contentType: false,
+                                        success: function(response) {
+                                            
+                                            
+                                            // Check if the message was sent successfully
+                                            if (response.success) {
+                                                // Display success message
+                                              
+                                                
+                                                // Clear the input field based on the message type
+                                                if ($('#contentTextArea').length) {
+                                                    $('#contentTextArea').val('');
+                                                } else if ($('#messageTextArea').length) {
+                                                    $('#messageTextArea').val('');
+                                                }
+                                                
+                                                // Optionally, update the UI to reflect the new message
+                                            } else if (response.success) {
+                                                // Handle special 'ff' case
+                                                alert(response.message);
+                                                
+                                                // Clear the input field based on the message type
+                                                if ($('#contentTextArea').length) {
+                                                    $('#contentTextArea').val('');
+                                                } else if ($('#messageTextArea').length) {
+                                                    $('#messageTextArea').val('');
+                                                }
+                                            } else {
+                                                // Display error message
+                                                alert('Failed to send message: ' + response.error);
+                                            }
+                                        },
+                                        error: function(xhr, status, error) {
+                                            // Handle AJAX errors
+                                            alert('An error occurred while sending the message: ' + error);
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
+                    
+                        <script src="{% static 'emojis/Emoji.js' %}"></script>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                var messageTextArea = document.getElementById("messageTextArea");
+                                var contentTextArea = document.getElementById("contentTextArea");
+                                var sendMessageButton = document.querySelector("#chatForm button[type='submit']");
+                        
+                                // Function to send message
+                                function sendMessage(event) {
+                                    // Prevent default form submission
+                                    event.preventDefault();
+                                    var form = document.getElementById("chatForm");
+                                    form.submit();
+                                }
+                        
+                                // Event listener for Enter key press in message textarea
+                                messageTextArea.addEventListener("keydown", function(event) {
+                                    if (event.key === "Enter" && !event.shiftKey) {
+                                        // Prevent new line
+                                        event.preventDefault();
+                                        sendMessage(event);
+                                    }
+                                });
+                        
+                                // Event listener for Enter key press in content textarea
+                                contentTextArea.addEventListener("keydown", function(event) {
+                                    if (event.key === "Enter" && !event.shiftKey) {
+                                        // Prevent new line
+                                        event.preventDefault();
+                                        sendMessage(event);
+                                    }
+                                });
+                        
+                                // Event listener for Send button click
+                                sendMessageButton.addEventListener("click", sendMessage);
+                            });
+                        </script>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                var contentTextArea = document.getElementById("contentTextArea");
+                                var sendMessageButton = document.querySelector("#chatForm button[type='submit']");
+                        
+                                // Function to send message
+                                function sendMessage(event) {
+                                    // Prevent default form submission
+                                    event.preventDefault();
+                                    var form = document.getElementById("chatForm");
+                                    form.submit();
+                                }
+                        
+                                
+                        
+                                // Event listener for Enter key press in content textarea
+                                contentTextArea.addEventListener("keydown", function(event) {
+                                    if (event.key === "Enter" && !event.shiftKey) {
+                                        // Prevent new line
+                                        event.preventDefault();
+                                        sendMessage(event);
+                                    }
+                                });
+                        
+                                // Event listener for Send button click
+                                sendMessageButton.addEventListener("click", sendMessage);
+                            });
+                        </script>
+                                                
+                        
+                        
+                        
+                        <script>
+                                             
+                                function initializeEmojiPicker() {
+                                new EmojiPicker({
+                                    trigger: [
+                                        {
+                                            selector: '#btn2', // Use the correct selector for your button
+                                            insertInto: '.chat-input textarea' // Specify the correct selector for the message textarea
+                                        }
+                                    ],
+                                    closeButton: true,
+                                    dragButton: true,
+                                    width: 350,
+                                    height: 370,
+                                    addPosX: -130,
+                                    addPosY: -380,
+                                    tabbed: false,
+                                    navPos: "bottom",
+                                    navButtonReversed: false,
+                                    disableSearch: false,
+                                    hiddenScrollBar: true, // Not for Firefox
+                                    animation: "slideDown",
+                                    animationDuration: "1s",
+                                    disableNav: false,
+                                    emojiDim: {
+                                        emojiPerRow: 5,
+                                        emojiSize: 30,
+                                        emojiButtonHeight: 80,
+                                        hideCategory: true
+                                    }
+                                });
+                            }
+                        
+                            // Call the function to initialize the EmojiPicker when the document is fully loaded
+                            document.addEventListener('DOMContentLoaded', function() {
+                                initializeEmojiPicker();
+                        
+                                // Prevent default form submission when the emojis button is clicked
+                                document.getElementById('btn2').addEventListener('click', function(event) {
+                                    event.preventDefault();
+                                });
+                            });
+                        </script>
+                        
+                        <script>
+                            // JavaScript to trigger file input click event when button is clicked
+                            document.querySelector('.add').addEventListener('click', function() {
+                                document.getElementById('attachmentInput').click();
+                            });
+                        </script>
+                        
+                        
+                    </div>
+                </div>
+                <div class="app-inside-right">
+                    <div class="right-icon-arrow">
+                        <div class="arrow-circle" >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+                    </div>
+                    
+                    <div class="pro-section">
+                        <div class="inside-project" style="display: flex; justify-content: center; align-items: center; margin-left: 0px;">
+                            <div class="pro-img" style="margin-bottom: 10px !important;">
+                                <i class="fas fa-address-book fa-2x"></i>
+                            </div>
+                            <div class="pro-title" style="margin-top: 5px !important; margin-right: 38px !important;">
+                                <h6 style="font-size: 20px; color: #333; font-weight: bold; text-transform: uppercase;">Contacts</h6>
+                            </div>
+                        </div>
+                        
+                    
+                        <div class="inside-user-online" style="max-height: 200px; overflow-y: auto; left:50px;">
+                            {% for contact in contacts %}
+                            <div class="user-first">
+                                <!-- Inside the user-first div -->
+                                <div class="user-name-letter l-bg" style="border-radius: 50%; overflow: hidden; width: 50px; height: 50px;">
+                                    <!-- Display the profile picture -->
+                                    
+                                    <img src="{{ contact.profile.get_avatar }}" alt="Profile Picture" style="object-fit: cover; width: 100%; height: 100%;">
+                                </div>
+                                <div class="user-name">
+                                    <!-- Make the username clickable -->
+                                    <a href="{% url 'inbox_with_contact' contact=contact.username %}">{{ contact.username }}</a>
+                                    {% if not contact in request.user.profile.blocked_users.all %}
+                                    <form method="post" action="{% url 'block_user' %}" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="user_to_block" value="{{ contact.username }}">
+                                        <button type="submit" class="btn btn-sm btn-danger" style="display: none;">Block</button>
+                                        <i class="fas fa-ban" style="cursor: pointer;" onclick="this.parentNode.submit();"></i>
+                                    </form>
+                                    {% else %}
+                                    <form method="post" action="{% url 'unblock_user' %}" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="user_to_unblock" value="{{ contact.username }}">
+                                        <button type="submit" class="btn btn-sm btn-primary" style="display: none;">Unblock</button>
+                                        <i class="fas fa-undo-alt" style="cursor: pointer;" onclick="this.parentNode.submit();"></i>
+                                    </form>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                            {% if group_chats %}
+                            <div class="inside-user-online" style="max-height: 325px; overflow-y: auto;width: 200px; ">                   
+                                <div class="user-name" style="position: sticky;top: 0; background-color: white; display: flex; align-items: center;">
+                                    <!-- Add an emoji or icon for group chats -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users" style="margin-right: 10px;">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                    <h3 style="margin: 0 !important; font-weight: bold !important; ">Group Chats</h3>
+                                </div>
+                                
+                                
+                                            <ul style="margin-left: -200px;">
+                                    <div class="user-name">
+                                        <ul class="group-chat-list">
+                                            {% for group_chat in group_chats %}
+                                                <li style="display: flex; align-items: center;">
+                                                    <a href="{% url 'group_chat_inbox' group_chat_id=group_chat.id %}">
+                                                        <div style="margin-left: 10px;">
+                                                            {% if group_chat.members.all|length > 0 %}
+                                                                {% if group_chat.picture %}
+                                                                    <div class="user-name-letter l-bg" style="border-radius: 50%; overflow: hidden; width: 40px; height: 40px; border-width: 1px;">
+                                                                        <!-- Display the profile picture -->
+                                                                        <img src="{{ group_chat.picture.url }}" alt="Profile Picture" style="object-fit: cover; width: 100%; height: 100%;">
+                                                                    </div>
+                                                                {% else %}
+                                                                    <div class="user-name-letter l-bg" style="border-radius: 50%; overflow: hidden; width: 40px; height: 40px; border-width: 1px;">
+                                                                        
+                                                                        <img src="{% static 'assets/img/team/default-profile-picture.png' %}" alt="Profile Picture" style="object-fit: cover; width: 100%; height: 100%;">
+                                                                    </div>
+                                                                {% endif %}
+                                                            
+                                                            {% endif %}
+                                                        </div><!-- Default image if no members -->
+                                                        
+                                                        <div class="user-name" style="font-size: small !important;">
+                                                            <h3>{{group_chat.group_name }}</h3>
+                                                            <!-- Add additional group chat information as needed -->
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </ul>
+                                {% endif %}
+                            </div>
+                            
+                        
+                        
+                        
+
+                    </div>
+                    
+                   
+                    
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'chat/main.js' %}"></script>
+        <script>
+            // JavaScript to scroll to the bottom of the conversation area when the page is loaded
+            window.onload = function() {
+                scrollToBottom();
+            };
+        
+            // Function to scroll to the bottom of the conversation area
+            function scrollToBottom() {
+                var conversationArea = document.getElementById('conversation-area');
+                conversationArea.scrollTop = conversationArea.scrollHeight;
+            }
+        </script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+ 
+        {% if selected_conversation %}
+ <script>
+    $(document).ready(function() {
+        const currentUser = "{{ request.user.profile.user }}";  
+        const otherUser = "{{ selected_contact_username }}";
+        const conversationId = [currentUser, otherUser].sort().join('_');
+        const chatSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/chat/'+ conversationId + '/'
+        );
+
+        chatSocket.onopen = function(e) {
+            console.log('Chat socket successfully connected.');
+        };
+
+        chatSocket.onmessage = function(e) {
+
+            const data = JSON.parse(e.data);
+            const message = data.message;
+            const sender = data.sender;
+            const timestamp = data.timestamp;
+            const pic = data.pic;
+            const attachements = data.attachments;
+            console.log("on message ", attachements)
+            console.log("reaching picture", pic)
+            setMessage(message, sender, timestamp, pic, attachements);
+        };
+
+        $('#sendButton').click(function() {
+    const messageInputDom = $('#messageTextArea');
+    const message = messageInputDom.val().trim();
+    const sender = "{{ request.user.profile.user }}";
+    const pic = "{{ request.user.profile.get_avatar}}"
+    console.log("first pic",pic)
+    
+    const timestamp = new Date().toLocaleString();
+    const fileInput = $('#attachmentInput')[0];
+    const files = fileInput.files;
+    
+    const attachments = [];
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const attachment = {
+            name: file.name,
+            url: URL.createObjectURL(file),
+            size: file.size,
+            
+        };
+        // Add each file to the attachments array
+        attachments.push(attachment);
+    }
+    console.log("goat", attachments)
+    if (message !== '' || attachments)  {
+        console.log("here i am")
+        chatSocket.send(JSON.stringify({
+            'message': message, 'sender': sender, 'timestamp': timestamp, 'pic' : pic, 'attachments': attachments
+        }));
+    }
+    // comment out or remove the following line
+    // messageInputDom.val('');
+});
+
+        function setMessage(message, sender, timestamp, pic, attachments) {
+    const container = $('#conversation-area');
+
+    // Create message elements
+    const messageDiv = $('<div></div>').addClass('chat-msg').attr('bis_skin_checked', '1');
+    const chatImgDiv = $('<div></div>').addClass('chat-smg-img').attr('bis_skin_checked', '1');
+    const proPicDiv = $('<div></div>').addClass('pro-pic').css({
+        width: '50px',
+        height: '50px',
+        overflow: 'hidden',
+        borderRadius: '50%'
+    }).attr('bis_skin_checked', '1');
+    const senderImg = $('<img>').attr('src', pic).addClass('img-fluid').css({
+        objectFit: 'cover',
+        width: '100%',
+        height: '100%'
+    }).attr('bis_skin_checked', '1');
+    const chatMsgContentDiv = $('<div></div>').addClass('chat-msg-content').attr('bis_skin_checked', '1');
+    const chatMsgNameDiv = $('<div></div>').addClass('chat-msg-name').attr('bis_skin_checked', '1');
+    const msgNameDiv = $('<div></div>').addClass('msg-name').attr('bis_skin_checked', '1');
+    const senderNameH6 = $('<h6></h6>').text(sender).attr('bis_skin_checked', '1');
+    const msgTimeDiv = $('<div></div>').addClass('msg-time').html('<span>' + timestamp + '</span>').attr('bis_skin_checked', '1');
+    const chatMsgTextDiv = $('<div></div>').addClass('chat-msg-text').attr('bis_skin_checked', '1');
+    const messageParagraph = $('<p></p>').text(message).attr('bis_skin_checked', '1');
+
+    // Append elements to construct the message
+    proPicDiv.append(senderImg);
+    chatImgDiv.append(proPicDiv);
+    chatMsgNameDiv.append(msgNameDiv, msgTimeDiv);
+    chatMsgContentDiv.append(chatMsgNameDiv, chatMsgTextDiv);
+    messageDiv.append(chatImgDiv, chatMsgContentDiv);
+    chatMsgTextDiv.append(messageParagraph);
+
+    // Handle attachments
+    if (attachments && attachments.length > 0) {
+    const attachmentBox = $('<div></div>').addClass('chat-file-box').attr('bis_skin_checked', '1');
+    attachments.forEach(attachment => {
+        const boxFileDiv = $('<div></div>').addClass('box-file').css('width', '400px').attr('bis_skin_checked', '1');
+        const fileLink = $('<a></a>').attr('href', attachment.url).attr('download', attachment.name).text(attachment.name).attr('bis_skin_checked', '1');
+        const iconImg = $('<img>').attr('src', attachment.icon).attr('alt', 'File Icon').attr('bis_skin_checked', '1');
+        console.log("attachement icon", attachment.icon);
+        const sizeSpan = $('<span></span>').text(attachment.size).attr('bis_skin_checked', '1');
+        boxFileDiv.append(iconImg, fileLink, sizeSpan);
+        attachmentBox.append(boxFileDiv);
+    });
+    chatMsgTextDiv.append(attachmentBox);
+}
+
+    // Add delete button
+    const deleteForm = $('<form></form>').attr({
+        method: 'post',
+        action: '/users/delete_message/' + message.id + '/'
+    }).attr('bis_skin_checked', '1');
+    const csrfInput = $('<input>').attr({
+        type: 'hidden',
+        name: 'csrfmiddlewaretoken',
+        value: '{% csrf_token %}'
+    }).attr('bis_skin_checked', '1');
+    const deleteButton = $('<button></button>').attr('type', 'submit').css({
+        backgroundColor: '#ff4d4d',
+        color: 'white',
+        border: 'none',
+        padding: '5px 10px',
+        borderRadius: '5px',
+        cursor: 'pointer'
+    }).text('Delete').attr('bis_skin_checked', '1');
+    deleteForm.append(csrfInput, deleteButton);
+    chatMsgTextDiv.append(deleteForm);
+
+    container.append(messageDiv);
+}
+    });
+</script>
+{% endif %}
+
+
+{% if selected_group_chat %}
+<script>
+    $(document).ready(function() {
+    const currentUser = "{{ request.user.profile.user }}";
+    const conversationId = "{{ selected_group_chat.id }}"; // Assuming selected_group_chat.id contains the group chat ID
+    const chatSocket = new WebSocket(
+        'ws://' + window.location.host + '/ws/chat/'+ conversationId + '/'
+    );
+
+    chatSocket.onopen = function(e) {
+        console.log('Chat socket successfully connected.');
+    };
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        const message = data.message;
+        const sender = data.sender;
+        const timestamp = data.timestamp;
+        const pic = data.pic;
+        const attachments = data.attachments;
+        setMessage(message, sender, timestamp, pic, attachments);
+    };
+
+    $('#sendButton').click(function() {
+        const messageInputDom = $('#contentTextArea');
+        const message = messageInputDom.val().trim();
+        const sender = "{{ request.user.profile.user }}";
+        const pic = "{{ request.user.profile.get_avatar}}";
+        const timestamp = new Date().toLocaleString();
+        const attachments = []; // No attachments for now
+
+        if (message !== '') {
+            chatSocket.send(JSON.stringify({
+                'message': message, 'sender': sender, 'timestamp': timestamp, 'pic' : pic, 'attachments': attachments
+            }));
+            // Clear input field
+            messageInputDom.val('');
+        }
+    });
+
+    function setMessage(message, sender, timestamp, pic, attachments) {
+        const container = $('#conversation-area');
+        const messageDiv = $('<div></div>').addClass('chat-msg').attr('bis_skin_checked', '1');
+        const chatImgDiv = $('<div></div>').addClass('chat-smg-img').attr('bis_skin_checked', '1');
+        const proPicDiv = $('<div></div>').addClass('pro-pic').css({
+            width: '50px',
+            height: '50px',
+            overflow: 'hidden',
+            borderRadius: '50%'
+        }).attr('bis_skin_checked', '1');
+        const senderImg = $('<img>').attr('src', pic).addClass('img-fluid').css({
+            objectFit: 'cover',
+            width: '100%',
+            height: '100%'
+        }).attr('bis_skin_checked', '1');
+        const chatMsgContentDiv = $('<div></div>').addClass('chat-msg-content').attr('bis_skin_checked', '1');
+        const chatMsgNameDiv = $('<div></div>').addClass('chat-msg-name').attr('bis_skin_checked', '1');
+        const msgNameDiv = $('<div></div>').addClass('msg-name').attr('bis_skin_checked', '1');
+        const senderNameH6 = $('<h6></h6>').text(sender).attr('bis_skin_checked', '1');
+        const msgTimeDiv = $('<div></div>').addClass('msg-time').html('<span>' + timestamp + '</span>').attr('bis_skin_checked', '1');
+        const chatMsgTextDiv = $('<div></div>').addClass('chat-msg-text').attr('bis_skin_checked', '1');
+        const messageParagraph = $('<p></p>').text(message).attr('bis_skin_checked', '1');
+        const csrfInput = $('<input>').attr({
+        type: 'hidden',
+        name: 'csrfmiddlewaretoken',
+        value: '{% csrf_token %}'
+        }).attr('bis_skin_checked', '1');
+
+        proPicDiv.append(senderImg);
+        chatImgDiv.append(proPicDiv);
+        chatMsgNameDiv.append(msgNameDiv, msgTimeDiv);
+        chatMsgContentDiv.append(chatMsgNameDiv, chatMsgTextDiv);
+        messageDiv.append(chatImgDiv, chatMsgContentDiv);
+        chatMsgTextDiv.append(messageParagraph);
+
+        if (attachments && attachments.length > 0) {
+            const attachmentBox = $('<div></div>').addClass('chat-file-box').attr('bis_skin_checked', '1');
+            attachments.forEach(attachment => {
+                const boxFileDiv = $('<div></div>').addClass('box-file').css('width', '400px').attr('bis_skin_checked', '1');
+                const fileLink = $('<a></a>').attr('href', attachment.url).attr('download', attachment.name).text(attachment.name).attr('bis_skin_checked', '1');
+                const iconImg = $('<img>').attr('src', attachment.icon).attr('alt', 'File Icon').attr('bis_skin_checked', '1');
+                const sizeSpan = $('<span></span>').text(attachment.size).attr('bis_skin_checked', '1');
+                boxFileDiv.append(iconImg, fileLink, sizeSpan);
+                attachmentBox.append(boxFileDiv);
+            });
+            chatMsgTextDiv.append(attachmentBox);
+        }
+
+        container.append(messageDiv);
+    }
+});
+
+</script>
+{% endif %}
+
+
+
+
+</body>
+
+</html>
