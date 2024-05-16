@@ -84,13 +84,14 @@ myproject/
 
 └── views.py
 
+![Alt text](https://github.com/firas005/Projet-Integre/blob/117bfd01b839a62b78653a1b8dd5566156665c11/contactus.png)"Contact Us Page "
 
 
 ![Alt text](https://github.com/firas005/Projet-Integre/blob/79a49dd7af340ce0abcec264ae5c218bcac135cc/signup.png)"Register Page"
 
 ![Alt text](https://github.com/firas005/Projet-Integre/blob/6ee5087594125343622510372be172bb684d7190/Login.png )"Login Page"
 
-![Alt text](https://github.com/firas005/Projet-Integre/blob/7b22fae30fd610689151f665210f7fa46383dc6f/profileview.png) "Porfile View"
+![Alt text]([https://github.com/firas005/Projet-Integre/blob/7b22fae30fd610689151f665210f7fa46383dc6f/profileview.png](https://github.com/firas005/Projet-Integre/blob/117bfd01b839a62b78653a1b8dd5566156665c11/profileview.png)) "Porfile View"
 
 ![Alt text](https://github.com/firas005/Projet-Integre/blob/7b22fae30fd610689151f665210f7fa46383dc6f/msgcontact.png)"Main Page"
 
