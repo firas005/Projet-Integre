@@ -7,6 +7,11 @@ SafeChat is an encrypted peer-to-peer messaging application with group chat feat
 - **Peer-to-Peer Messaging**: Users can communicate directly with each other without intermediaries.
 - **Group Chats**: Users can create and participate in group chats with multiple participants.
 - **Emojis**: Includes support for emojis to enhance the messaging experience.
+- **Block User**: You can Block And Unblock your friend
+- **Delete Message**: You can delete a message you sent
+- **Ip Restriction**: You can Block Ip access
+- **Admin Menu for group chats**: Group admin has permissions
+- **Customized profile**: You can edit and update your profile infos and pincture whenever you want.
 - **User Management**: Admins can block or delete users as needed.
 - **Responsive Design**: Utilizes responsive HTML and CSS templates to ensure a seamless experience across devices.
 
