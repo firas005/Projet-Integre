@@ -91,7 +91,7 @@ myproject/
 
 ![Alt text](https://github.com/firas005/Projet-Integre/blob/6ee5087594125343622510372be172bb684d7190/Login.png )"Login Page"
 
-![Alt text](https://github.com/firas005/Projet-Integre/blob/064d13f5f82cbfac427067cda8b722a1c54327a8/profileview.png)"Porfile View"
+
 
 ![Alt text](https://github.com/firas005/Projet-Integre/blob/7b22fae30fd610689151f665210f7fa46383dc6f/msgcontact.png)"Main Page"
 
