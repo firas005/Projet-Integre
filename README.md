@@ -1,6 +1,6 @@
-# SafeChat
+# SafeSpeak
 
-SafeChat is an encrypted peer-to-peer messaging application with group chat features, built using HTML, CSS, JavaScript, and Python (Django framework).
+SafeSpeak is an encrypted peer-to-peer messaging application with group chat features, built using HTML, CSS, JavaScript, and Python (Django framework).
 
 ## Features
 - **End-to-End Encryption**: All messages are encrypted to ensure privacy and security.
